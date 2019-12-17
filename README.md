@@ -14,6 +14,6 @@
 ***
 
 ### Screenshots:
-![screenshot-1]()
-![screenshot-2]()
-![screenshot-3]()
+![screenshot-1](https://github.com/tool7/gameoflife/blob/master/assets/screenshot-1.png?raw=true)
+![screenshot-2](https://github.com/tool7/gameoflife/blob/master/assets/screenshot-2.png?raw=true)
+![screenshot-3](https://github.com/tool7/gameoflife/blob/master/assets/screenshot-3.png?raw=true)
