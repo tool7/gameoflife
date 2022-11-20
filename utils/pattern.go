@@ -1,16 +1,16 @@
-package main
+package utils
 
-type patternType int
+type PatternType int
 const (
-	rPentomino patternType = iota + 1
-	diehard
-	acorn
-	gosperGliderGun
+	RPentomino PatternType = iota + 1
+	Diehard
+	Acorn
+	GosperGliderGun
 )
 
 type offset struct {
-	x int
-	y int
+	X int
+	Y int
 }
 
 var rPentominoPattern = []offset {
@@ -80,15 +80,15 @@ var gosperGliderGunPattern = []offset {
 	offset { 21, 3 },
 }
 
-func getPatternOffsets(patternType patternType) []offset {
+func GetPatternOffsets(patternType PatternType) []offset {
 	switch patternType {
-	case rPentomino:
+	case RPentomino:
 		return rPentominoPattern
-	case diehard:
+	case Diehard:
 		return diehardPattern
-	case acorn:
+	case Acorn:
 		return acornPattern
-	case gosperGliderGun:
+	case GosperGliderGun:
 		return gosperGliderGunPattern
 	}
 

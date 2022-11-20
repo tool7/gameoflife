@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"fmt"
@@ -8,14 +8,14 @@ import (
 	"github.com/faiface/pixel/text"
 )
 
-func initInstructionsText() *text.Text {
-	face, err := loadTTF("intuitive.ttf", 36)
+func InitInstructionsText(screenWidth, screenHeight int) *text.Text {
+	face, err := LoadTTF("intuitive.ttf", 36)
 	if err != nil {
 		panic(err)
 	}
 
 	atlas := text.NewAtlas(face, text.ASCII)
-	text := text.New(pixel.V(screenWidth / 2, screenHeight - 60), atlas)
+	text := text.New(pixel.V(float64(screenWidth / 2), float64(screenHeight - 60)), atlas)
 
 	instructions := []string{
 		"Press SPACE to toggle simulation, C to clear the grid and +/- to change sleep interval\n",
@@ -31,19 +31,19 @@ func initInstructionsText() *text.Text {
 	return text
 }
 
-func initGameStatusText() *text.Text {
-	face, err := loadTTF("intuitive.ttf", 60)
+func InitGameStatusText(screenWidth, screenHeight int) *text.Text {
+	face, err := LoadTTF("intuitive.ttf", 60)
 	if err != nil {
 		panic(err)
 	}
 
 	atlas := text.NewAtlas(face, text.ASCII)
-	text := text.New(pixel.V(screenWidth - 350, screenHeight - 120), atlas)
+	text := text.New(pixel.V(float64(screenWidth - 350), float64(screenHeight - 120)), atlas)
 
 	return text
 }
 
-func drawGameStatusText(win *pixelgl.Window, textHandle *text.Text) {
+func DrawGameStatusText(win *pixelgl.Window, textHandle *text.Text, isGameStarted bool) {
 	textHandle.Clear()
 	
 	if isGameStarted {
@@ -55,19 +55,19 @@ func drawGameStatusText(win *pixelgl.Window, textHandle *text.Text) {
 	textHandle.Draw(win, pixel.IM)
 }
 
-func initGameIntervalText() *text.Text {
-	face, err := loadTTF("intuitive.ttf", 42)
+func InitGameIntervalText(screenHeight int) *text.Text {
+	face, err := LoadTTF("intuitive.ttf", 42)
 	if err != nil {
 		panic(err)
 	}
 
 	atlas := text.NewAtlas(face, text.ASCII)
-	text := text.New(pixel.V(50, screenHeight - 120), atlas)
+	text := text.New(pixel.V(50, float64(screenHeight - 120)), atlas)
 
 	return text
 }
 
-func drawGameIntervalText(win *pixelgl.Window, textHandle *text.Text) {
+func DrawGameIntervalText(win *pixelgl.Window, textHandle *text.Text, currentGameIntervalInMs int) {
 	textHandle.Clear()
 	
 	fmt.Fprintf(textHandle, "Sleep interval:  %d ms", currentGameIntervalInMs)

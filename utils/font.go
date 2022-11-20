@@ -1,14 +1,14 @@
-package main
+package utils
 
 import (
-	"os"
 	"io/ioutil"
+	"os"
 
-	"golang.org/x/image/font"
 	"github.com/golang/freetype/truetype"
+	"golang.org/x/image/font"
 )
 
-func loadTTF(path string, size float64) (font.Face, error) {
+func LoadTTF(path string, size float64) (font.Face, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err

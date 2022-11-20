@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"time"
+	"tool7/gameoflife/utils"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
@@ -120,16 +121,16 @@ func handleKeyboardEvents(win *pixelgl.Window, grid *grid, gameIntervalChannel c
 	mousePosition := win.MousePosition()
 
 	if win.JustPressed(pixelgl.Key1) {
-		addPatternToGrid(rPentomino, mousePosition, grid)
+		addPatternToGrid(utils.RPentomino, mousePosition, grid)
 	}
 	if win.JustPressed(pixelgl.Key2) {
-		addPatternToGrid(diehard, mousePosition, grid)
+		addPatternToGrid(utils.Diehard, mousePosition, grid)
 	}
 	if win.JustPressed(pixelgl.Key3) {
-		addPatternToGrid(acorn, mousePosition, grid)
+		addPatternToGrid(utils.Acorn, mousePosition, grid)
 	}
 	if win.JustPressed(pixelgl.Key4) {
-		addPatternToGrid(gosperGliderGun, mousePosition, grid)
+		addPatternToGrid(utils.GosperGliderGun, mousePosition, grid)
 	}
 
 	if win.JustPressed(pixelgl.KeyKPAdd) {
@@ -148,13 +149,13 @@ func handleKeyboardEvents(win *pixelgl.Window, grid *grid, gameIntervalChannel c
 	}
 }
 
-func addPatternToGrid(patternType patternType, position pixel.Vec, grid *grid) {
-	patternOffsets := getPatternOffsets(patternType)
+func addPatternToGrid(patternType utils.PatternType, position pixel.Vec, grid *grid) {
+	patternOffsets := utils.GetPatternOffsets(patternType)
 	cellXIndex, cellYIndex := getCellIndiciesByMousePosition(position)
 
 	for _, offset := range patternOffsets {
-		offsetedX := cellXIndex + offset.x
-		offsetedY := cellYIndex + offset.y
+		offsetedX := cellXIndex + offset.X
+		offsetedY := cellYIndex + offset.Y
 		
 		if offsetedX < 0 || offsetedX >= cellsHorizontalCount || offsetedY < 0 || offsetedY >= cellsVerticalCount {
 			return
@@ -244,9 +245,9 @@ func run() {
 
 	imd := imdraw.New(nil)
 	grid := initGrid()
-	instructionsText := initInstructionsText()
-	gameStatusText := initGameStatusText()
-	gameIntervalText := initGameIntervalText()
+	instructionsText := utils.InitInstructionsText(screenWidth, screenHeight)
+	gameStatusText := utils.InitGameStatusText(screenWidth, screenHeight)
+	gameIntervalText := utils.InitGameIntervalText(screenHeight)
 	gameIntervalChannel := make(chan int)
 	quitTickerChannel := make(chan bool)
 	
@@ -282,8 +283,8 @@ func run() {
 		handleKeyboardEvents(win, &grid, gameIntervalChannel)
 
 		instructionsText.Draw(win, pixel.IM)
-		drawGameIntervalText(win, gameIntervalText)
-		drawGameStatusText(win, gameStatusText)
+		utils.DrawGameIntervalText(win, gameIntervalText, currentGameIntervalInMs)
+		utils.DrawGameStatusText(win, gameStatusText, isGameStarted)
 		drawGrid(win, imd, &grid)
 
 		win.Update()
